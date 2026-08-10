@@ -89,7 +89,7 @@ const SellerProductForm = () => {
         category_id: parseInt(formData.category_id, 10)
       };
 
-      const url = isEditMode ? `/api/seller/products/${id}` : '/api/seller/products';
+      const url = (import.meta.env.VITE_API_URL || '') + (isEditMode ? `/api/seller/products/${id}` : '/api/seller/products');
       const method = isEditMode ? 'PUT' : 'POST';
 
       const res = await fetch(url, {

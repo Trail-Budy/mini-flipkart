@@ -9,7 +9,7 @@ const ProductList = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
+
   const [searchParams, setSearchParams] = useSearchParams();
   const categoryParam = searchParams.get('category');
   const searchParam = searchParams.get('search');
@@ -37,7 +37,7 @@ const ProductList = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      let url = '/api/products';
+      let url = (import.meta.env.VITE_API_URL || '') + '/api/products';
       const params = new URLSearchParams();
       if (categoryParam) params.append('category', categoryParam);
       if (searchParam) params.append('search', searchParam);
@@ -45,7 +45,7 @@ const ProductList = () => {
 
       const res = await fetch(url);
       if (!res.ok) throw new Error('Failed to fetch products');
-      
+
       const data = await res.json();
       setProducts(data);
     } catch (err) {
@@ -73,14 +73,14 @@ const ProductList = () => {
 
   return (
     <div style={{ paddingBottom: '40px' }}>
-      
+
       {/* Categories Bar */}
       <div style={{ backgroundColor: 'var(--bg-surface)', borderBottom: '1px solid var(--border-subtle)', boxShadow: 'var(--shadow-sm)' }}>
         <div className="page-container" style={{ padding: '16px 20px', display: 'flex', gap: '32px', overflowX: 'auto', scrollbarWidth: 'none' }}>
-          
-          <div 
+
+          <div
             onClick={clearFilters}
-            style={{ 
+            style={{
               display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', cursor: 'pointer', minWidth: '70px',
               color: !categoryParam ? 'var(--primary)' : 'var(--text-main)'
             }}
@@ -92,16 +92,16 @@ const ProductList = () => {
           </div>
 
           {categories.map(cat => (
-            <div 
-              key={cat.id} 
+            <div
+              key={cat.id}
               onClick={() => setSearchParams({ category: cat.id })}
-              style={{ 
+              style={{
                 display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px', cursor: 'pointer', minWidth: '70px',
                 color: parseInt(categoryParam) === cat.id ? 'var(--primary)' : 'var(--text-main)'
               }}
               className="category-icon-hover"
             >
-              <div style={{ 
+              <div style={{
                 width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'var(--bg-body)', display: 'flex', alignItems: 'center', justifyContent: 'center',
                 transition: 'all var(--transition-fast)'
               }}>
@@ -116,9 +116,9 @@ const ProductList = () => {
       {/* Hero Section (Only show if not filtering/searching) */}
       {!isFiltering && (
         <div className="page-container" style={{ paddingTop: '24px' }}>
-          <div style={{ 
-            height: '350px', 
-            borderRadius: 'var(--radius-md)', 
+          <div style={{
+            height: '350px',
+            borderRadius: 'var(--radius-md)',
             overflow: 'hidden',
             display: 'flex',
             alignItems: 'center',
@@ -128,7 +128,7 @@ const ProductList = () => {
           }}>
             <div style={{ padding: '60px', zIndex: 1, maxWidth: '600px' }}>
               <h1 style={{ fontSize: '3rem', marginBottom: '16px', color: 'white', lineHeight: '1.1' }}>
-                Everything you need.<br/>One place.
+                Everything you need.<br />One place.
               </h1>
               <p style={{ fontSize: '1.2rem', marginBottom: '32px', opacity: 0.9 }}>
                 Discover great products at prices you'll love. Upgrade your tech, home, and lifestyle today.
@@ -137,7 +137,7 @@ const ProductList = () => {
                 Shop Now <ChevronRight size={20} />
               </button>
             </div>
-            
+
             {/* Abstract Design Elements */}
             <div style={{ position: 'absolute', right: '-50px', top: '-50px', width: '400px', height: '400px', borderRadius: '50%', background: 'rgba(255,255,255,0.1)' }}></div>
             <div style={{ position: 'absolute', right: '150px', bottom: '-100px', width: '300px', height: '300px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }}></div>
@@ -147,19 +147,19 @@ const ProductList = () => {
 
       {/* Main Content Area */}
       <div className="page-container" style={{ paddingTop: '24px' }}>
-        
+
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '24px' }}>
           <div>
             <h2 style={{ fontSize: '1.5rem', marginBottom: '8px' }}>
-              {searchParam ? `Search Results for "${searchParam}"` : 
-               categoryParam ? `${categories.find(c => c.id === parseInt(categoryParam))?.name || 'Category'} Products` : 
-               'Featured Products'}
+              {searchParam ? `Search Results for "${searchParam}"` :
+                categoryParam ? `${categories.find(c => c.id === parseInt(categoryParam))?.name || 'Category'} Products` :
+                  'Featured Products'}
             </h2>
             <div style={{ color: 'var(--text-muted)' }}>
               Showing {products.length} {products.length === 1 ? 'item' : 'items'}
             </div>
           </div>
-          
+
           {isFiltering && (
             <button onClick={clearFilters} className="btn btn-outline" style={{ padding: '8px 16px' }}>
               Clear Filters
@@ -190,7 +190,7 @@ const ProductList = () => {
         )}
 
       </div>
-      
+
       {/* Reusable Icon Package for All */}
       <style>{`
         .category-icon-hover:hover div {
@@ -204,6 +204,6 @@ const ProductList = () => {
 };
 
 // Simple icon for 'All'
-const Package = ({size}) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16.5 9.4 7.5 4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>;
+const Package = ({ size }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16.5 9.4 7.5 4.21" /><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /><polyline points="3.27 6.96 12 12.01 20.73 6.96" /><line x1="12" y1="22.08" x2="12" y2="12" /></svg>;
 
 export default ProductList;

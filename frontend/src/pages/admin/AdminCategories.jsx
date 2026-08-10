@@ -37,7 +37,7 @@ const AdminCategories = () => {
     }
 
     try {
-      const url = editingId ? `/api/admin/categories/${editingId}` : '/api/admin/categories';
+      const url = (import.meta.env.VITE_API_URL || '') + (editingId ? `/api/admin/categories/${editingId}` : '/api/admin/categories');
       const method = editingId ? 'PUT' : 'POST';
       
       const res = await fetch(url, {
