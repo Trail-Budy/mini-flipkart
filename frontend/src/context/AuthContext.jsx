@@ -15,7 +15,14 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/auth/me', { credentials: 'include' });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/auth/me', { 
+        credentials: 'include',
+        signal: controller.signal
+      });
+      clearTimeout(timeoutId);
+      
       if (res.ok) {
         const data = await res.json();
         setUser(data);
@@ -71,7 +78,11 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ user, loading, login, register, logout }}>
-      {!loading && children}
+      {loading ? (
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: 'var(--bg-body)' }}>
+          <div style={{ fontSize: '1.2rem', color: 'var(--primary)', fontWeight: '500' }}>Loading Mini Flipkart...</div>
+        </div>
+      ) : children}
     </AuthContext.Provider>
   );
 };

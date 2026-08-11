@@ -7,7 +7,8 @@ import { ShoppingCart, Heart, Star } from 'lucide-react';
 
 const ProductCard = ({ product }) => {
   const { user } = useAuth();
-  const { addToCart, loading: cartLoading } = useCart();
+  const { addToCart, loadingItems } = useCart();
+  const cartLoading = loadingItems?.[product.id] || false;
   const { addToWishlist, removeFromWishlist, isInWishlist, loading: wishlistLoading } = useWishlist();
   const { showToast } = useToast();
   const navigate = useNavigate();

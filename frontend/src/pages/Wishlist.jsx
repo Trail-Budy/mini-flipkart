@@ -6,7 +6,7 @@ import { useToast } from '../context/ToastContext';
 
 const Wishlist = () => {
   const { wishlistItems, removeFromWishlist, loading: wishlistLoading } = useWishlist();
-  const { addToCart, loading: cartLoading } = useCart();
+  const { addToCart, loadingItems } = useCart();
   const { showToast } = useToast();
 
   const handleAddToCart = async (item) => {
@@ -92,11 +92,11 @@ const Wishlist = () => {
                   
                   <button 
                     onClick={() => handleAddToCart(item)}
-                    disabled={cartLoading}
+                    disabled={loadingItems?.[item.product_id] || false}
                     className="btn btn-secondary"
                     style={{ padding: '8px 24px', fontWeight: '600', textTransform: 'uppercase' }}
                   >
-                    <ShoppingCart size={16} /> Add to Cart
+                    <ShoppingCart size={16} /> {(loadingItems?.[item.product_id] || false) ? 'Adding...' : 'Add to Cart'}
                   </button>
                 </div>
               </div>

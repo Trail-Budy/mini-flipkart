@@ -9,6 +9,7 @@ export const CartProvider = ({ children }) => {
   const { user } = useAuth();
   const [cartCount, setCartCount] = useState(0);
   const [loading, setLoading] = useState(false);
+  const [loadingItems, setLoadingItems] = useState({});
 
   useEffect(() => {
     if (user) {
@@ -33,7 +34,7 @@ export const CartProvider = ({ children }) => {
   const addToCart = async (productId, quantity = 1) => {
     if (!user) throw new Error('Please login to add items to your cart');
     
-    setLoading(true);
+    setLoadingItems(prev => ({ ...prev, [productId]: true }));
     try {
       const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/cart', {
         credentials: 'include',
@@ -48,7 +49,7 @@ export const CartProvider = ({ children }) => {
       await fetchCartCount();
       return true;
     } finally {
-      setLoading(false);
+      setLoadingItems(prev => ({ ...prev, [productId]: false }));
     }
   };
 
@@ -99,7 +100,7 @@ export const CartProvider = ({ children }) => {
   };
 
   return (
-    <CartContext.Provider value={{ cartCount, fetchCartCount, addToCart, updateQuantity, removeFromCart, clearCart, loading }}>
+    <CartContext.Provider value={{ cartCount, fetchCartCount, addToCart, updateQuantity, removeFromCart, clearCart, loading, loadingItems }}>
       {children}
     </CartContext.Provider>
   );

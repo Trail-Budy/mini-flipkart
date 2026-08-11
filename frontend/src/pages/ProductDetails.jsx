@@ -10,7 +10,8 @@ const ProductDetails = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { addToCart, loading: cartLoading } = useCart();
+  const { addToCart, loadingItems } = useCart();
+  const cartLoading = product ? (loadingItems?.[product.id] || false) : false;
   const { addToWishlist, removeFromWishlist, isInWishlist, loading: wishlistLoading } = useWishlist();
   const { showToast } = useToast();
   
