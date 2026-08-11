@@ -14,7 +14,7 @@ const AdminDashboard = () => {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/admin/stats');
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/admin/stats', { credentials: 'include' });
       if (!res.ok) throw new Error('Failed to load admin statistics');
       const data = await res.json();
       setStats(data);

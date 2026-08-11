@@ -12,7 +12,7 @@ const SellerOrders = () => {
 
   const fetchOrders = async () => {
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/seller/orders');
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/seller/orders', { credentials: 'include' });
       if (res.ok) {
         const data = await res.json();
         setOrders(data);
@@ -28,6 +28,7 @@ const SellerOrders = () => {
   const handleStatusChange = async (orderId, newStatus) => {
     try {
       const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/seller/orders/${orderId}/status`, {
+        credentials: 'include',
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })

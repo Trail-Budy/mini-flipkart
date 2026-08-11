@@ -20,7 +20,7 @@ const Cart = () => {
 
   const fetchCart = async () => {
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/cart');
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/cart', { credentials: 'include' });
       if (!res.ok) throw new Error('Failed to fetch cart');
       const data = await res.json();
       setItems(data.items);

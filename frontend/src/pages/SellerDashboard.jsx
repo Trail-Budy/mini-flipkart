@@ -14,7 +14,7 @@ const SellerDashboard = () => {
 
   const fetchDashboardStats = async () => {
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/seller/dashboard');
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/seller/dashboard', { credentials: 'include' });
       if (res.ok) {
         const data = await res.json();
         setStats(data);

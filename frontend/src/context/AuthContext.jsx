@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuth = async () => {
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/auth/me');
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/auth/me', { credentials: 'include' });
       if (res.ok) {
         const data = await res.json();
         setUser(data);
@@ -32,6 +32,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/auth/login', {
+        credentials: 'include',
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, password })
@@ -46,6 +47,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (name, email, password) => {
     const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/auth/register', {
+        credentials: 'include',
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ name, email, password })
@@ -60,7 +62,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await fetch((import.meta.env.VITE_API_URL || '') + '/api/auth/logout', { method: 'POST' });
+      await fetch((import.meta.env.VITE_API_URL || '') + '/api/auth/logout', { method: 'POST', credentials: 'include' });
     } catch (error) {
       console.error('Logout error:', error);
     }

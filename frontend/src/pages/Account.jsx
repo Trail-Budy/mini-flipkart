@@ -30,7 +30,7 @@ const Account = () => {
   const fetchAddresses = async () => {
     setLoadingAddresses(true);
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/addresses');
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/addresses', { credentials: 'include' });
       if (res.ok) {
         const data = await res.json();
         setAddresses(data);
@@ -45,6 +45,7 @@ const Account = () => {
   const handleAddAddress = async (formData) => {
     try {
       const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/addresses', {
+        credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

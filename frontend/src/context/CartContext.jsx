@@ -20,7 +20,7 @@ export const CartProvider = ({ children }) => {
 
   const fetchCartCount = async () => {
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/cart/count');
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/cart/count', { credentials: 'include' });
       if (res.ok) {
         const data = await res.json();
         setCartCount(data.count);
@@ -36,6 +36,7 @@ export const CartProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/cart', {
+        credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ product_id: productId, quantity })
@@ -55,6 +56,7 @@ export const CartProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/cart/${productId}`, {
+        credentials: 'include',
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ quantity })
@@ -73,7 +75,7 @@ export const CartProvider = ({ children }) => {
   const removeFromCart = async (productId) => {
     setLoading(true);
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/cart/${productId}`, { method: 'DELETE' });
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/cart/${productId}`, { method: 'DELETE', credentials: 'include' });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error);
       
@@ -87,7 +89,7 @@ export const CartProvider = ({ children }) => {
   const clearCart = async () => {
     setLoading(true);
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/cart', { method: 'DELETE' });
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/cart', { method: 'DELETE', credentials: 'include' });
       if (res.ok) {
         setCartCount(0);
       }

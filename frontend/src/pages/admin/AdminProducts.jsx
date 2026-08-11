@@ -14,7 +14,7 @@ const AdminProducts = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/admin/products');
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/admin/products', { credentials: 'include' });
       if (!res.ok) throw new Error('Failed to fetch products');
       const data = await res.json();
       setProducts(data);
@@ -32,6 +32,7 @@ const AdminProducts = () => {
 
     try {
       const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/admin/products/${productId}`, {
+        credentials: 'include',
         method: 'DELETE'
       });
       

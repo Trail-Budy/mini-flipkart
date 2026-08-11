@@ -19,7 +19,7 @@ const OrderDetails = () => {
 
   const fetchOrderDetails = async () => {
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/orders/${id}`);
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/orders/${id}`, { credentials: 'include' });
       if (!res.ok) throw new Error('Failed to fetch order details');
       const data = await res.json();
       setOrder(data);
@@ -36,6 +36,7 @@ const OrderDetails = () => {
     setCancelling(true);
     try {
       const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/orders/${id}/cancel`, {
+        credentials: 'include',
         method: 'PATCH',
       });
       

@@ -20,7 +20,7 @@ export const WishlistProvider = ({ children }) => {
 
   const fetchWishlist = async () => {
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/wishlist');
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/wishlist', { credentials: 'include' });
       if (res.ok) {
         const data = await res.json();
         setWishlistItems(data);
@@ -35,7 +35,7 @@ export const WishlistProvider = ({ children }) => {
     
     setLoading(true);
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/wishlist/${productId}`, { method: 'POST' });
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/wishlist/${productId}`, { method: 'POST', credentials: 'include' });
       const data = await res.json();
       
       if (!res.ok) throw new Error(data.error);
@@ -50,7 +50,7 @@ export const WishlistProvider = ({ children }) => {
   const removeFromWishlist = async (productId) => {
     setLoading(true);
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/wishlist/${productId}`, { method: 'DELETE' });
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/wishlist/${productId}`, { method: 'DELETE', credentials: 'include' });
       const data = await res.json();
       
       if (!res.ok) throw new Error(data.error);

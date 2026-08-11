@@ -30,8 +30,8 @@ const Checkout = () => {
     setLoading(true);
     try {
       const [addressRes, cartRes] = await Promise.all([
-        fetch((import.meta.env.VITE_API_URL || '') + '/api/addresses'),
-        fetch((import.meta.env.VITE_API_URL || '') + '/api/cart')
+        fetch((import.meta.env.VITE_API_URL || '') + '/api/addresses', { credentials: 'include' }),
+        fetch((import.meta.env.VITE_API_URL || '') + '/api/cart', { credentials: 'include' })
       ]);
 
       if (!addressRes.ok || !cartRes.ok) {
@@ -63,6 +63,7 @@ const Checkout = () => {
   const handleAddAddress = async (formData) => {
     try {
       const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/addresses', {
+        credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -89,6 +90,7 @@ const Checkout = () => {
     setPlacingOrder(true);
     try {
       const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/orders', {
+        credentials: 'include',
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ address_id: selectedAddressId })

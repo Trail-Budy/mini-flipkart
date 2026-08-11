@@ -14,7 +14,7 @@ const SellerProducts = () => {
 
   const fetchProducts = async () => {
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/seller/products');
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/seller/products', { credentials: 'include' });
       if (res.ok) {
         const data = await res.json();
         setProducts(data);
@@ -33,7 +33,7 @@ const SellerProducts = () => {
     }
 
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/seller/products/${id}`, { method: 'DELETE' });
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/seller/products/${id}`, { method: 'DELETE', credentials: 'include' });
       const data = await res.json();
       
       if (!res.ok) throw new Error(data.error || 'Failed to delete product');

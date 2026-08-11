@@ -16,7 +16,7 @@ const AdminOrderDetails = () => {
 
   const fetchOrderDetails = async () => {
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/admin/orders/${id}`);
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/admin/orders/${id}`, { credentials: 'include' });
       if (!res.ok) throw new Error('Failed to fetch order details');
       const data = await res.json();
       setOrder(data);
@@ -31,6 +31,7 @@ const AdminOrderDetails = () => {
   const handleStatusChange = async (newStatus) => {
     try {
       const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/admin/orders/${id}/status`, {
+        credentials: 'include',
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status: newStatus })

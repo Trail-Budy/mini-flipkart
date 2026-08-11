@@ -93,6 +93,7 @@ const SellerProductForm = () => {
       const method = isEditMode ? 'PUT' : 'POST';
 
       const res = await fetch(url, {
+        credentials: 'include',
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload)

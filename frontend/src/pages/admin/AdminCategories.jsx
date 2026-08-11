@@ -19,7 +19,7 @@ const AdminCategories = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/admin/categories');
+      const res = await fetch((import.meta.env.VITE_API_URL || '') + '/api/admin/categories', { credentials: 'include' });
       if (!res.ok) throw new Error('Failed to fetch categories');
       const data = await res.json();
       setCategories(data);
@@ -41,6 +41,7 @@ const AdminCategories = () => {
       const method = editingId ? 'PUT' : 'POST';
       
       const res = await fetch(url, {
+        credentials: 'include',
         method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
@@ -70,6 +71,7 @@ const AdminCategories = () => {
 
     try {
       const res = await fetch((import.meta.env.VITE_API_URL || '') + `/api/admin/categories/${id}`, {
+        credentials: 'include',
         method: 'DELETE'
       });
       
